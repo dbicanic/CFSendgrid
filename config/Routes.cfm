@@ -19,7 +19,14 @@
 	}
 
 	// Your Application Routes
-	addRoute(pattern=":handler/:action?");
+	addRoute(
+		pattern="email/sendgrid",
+		handler = 'email.sendgrid',
+		action = {
+			GET = 'sendSendgrid',
+			POST = 'sendSendgrid'
+		}
+	);
 
 
 	/** Developers can modify the CGI.PATH_INFO value in advance of the SES
