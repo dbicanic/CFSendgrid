@@ -1,28 +1,22 @@
 component{
 
-	// OPTIONAL HANDLER PROPERTIES
-	this.prehandler_only 	= "";
-	this.prehandler_except 	= "";
-	this.posthandler_only 	= "";
-	this.posthandler_except = "";
-	this.aroundHandler_only = "";
-	this.aroundHandler_except = "";
-	// REST Allowed HTTP Methods Ex: this.allowedMethods = {delete='POST,DELETE',index='GET'}
 	this.allowedMethods = {
-		sendSendgrid: "POST"
-	};
-
-	public struct function sendSendgrid( event, rc, prc ){
-		var response = sendgridService.sendSendgrid( prc );
-		event.renderData( data=response, formats="json,xml" );
+		sendSendgrid: "GET"
 	}
 
-	/**
-	IMPLICIT FUNCTIONS: Uncomment to use
 	function preHandler( event, rc, prc, action, eventArguments ){
+		variables.sendgridService = populateModel( "service.email.SendgridService" );
 	}
 	function postHandler( event, rc, prc, action, eventArguments ){
+		// prc.results[ "errors" ] = variables.sendgridService.getErrors();
 	}
+
+	public struct function sendSendgrid( event, rc, prc ){
+		var response = sendgridService.sendSendgrid( arguementCollection=rc );
+
+		event.renderData( type="json", data=response );
+	}
+	/**
 	function aroundHandler( event, rc, prc, targetAction, eventArguments ){
 		// executed targeted action
 		arguments.targetAction( event );
@@ -34,7 +28,5 @@ component{
 	function onInvalidHTTPMethod( event, rc, prc, faultAction, eventArguments ){
 	}
 	*/
-
-
 
 }
