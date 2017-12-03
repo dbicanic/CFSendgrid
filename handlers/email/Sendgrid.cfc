@@ -1,8 +1,8 @@
 component{
 
 	this.allowedMethods = {
-		sendSendgrid: "GET"
-	}
+		sendSendgrid: "GET,POST"
+	};
 
 	function preHandler( event, rc, prc, action, eventArguments ){
 		variables.sendgridService = populateModel( "service.email.SendgridService" );
@@ -11,7 +11,7 @@ component{
 		// prc.results[ "errors" ] = variables.sendgridService.getErrors();
 	}
 
-	public struct function sendSendgrid( event, rc, prc ){
+	public any function sendSendgrid( event, rc, prc ){
 		var response = sendgridService.sendSendgrid( arguementCollection=rc );
 
 		event.renderData( type="json", data=response );
