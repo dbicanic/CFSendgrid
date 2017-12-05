@@ -1,5 +1,5 @@
 component{
-	// property name="emailGateway" inject="apps.messaging.v1.gateway.email.EmailGateway";
+	// property name="emailGateway" inject="";
 
 	// property name="sendGridAPIKey" 	type="string";
 
