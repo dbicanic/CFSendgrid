@@ -1,32 +1,36 @@
-component{
-	// property name="emailGateway" inject="";
+component accessors="true"{
 
-	// property name="sendGridAPIKey" 	type="string";
-
-	public struct function sendSendgrid(){
-
-		data = {
-			"statusCode": "",
-			"statusText": "",
-			"headerResponse": ""
+	public struct function sendSendgrid(
+		required string toEmail,
+		required string fromEmail,
+		required string APIKey,
+		required string subject,
+		required string content
+		){
+		var data = {
+			statusCode: "",
+			statusText: "",
+			headerResponse: ""
 		};
 
+		var auth = "Bearer " & arguments.APIKey;
+
 		cfhttp( method="POST", charset="utf-8", url="https://api.sendgrid.com/v3/mail/send", result="result" ){
-		    cfhttpparam( name="Authorization", type="header", value="Bearer #arugments.apikey#" );
+		    cfhttpparam( name="Authorization", type="header", value=auth );
 		    cfhttpparam( name="Content-Type", type="header", value="application/json" );
 		    cfhttpparam( type="body", value=serializeJSON({
 		    	"personalizations": [
 		    		{ "to": [
-		    			{"email": "dbicanic77@gmail.com"}
+		    			{"email": arguments.toEmail}
 		    			]
 		    		}
 		    	],
 		    	"from": {
-		    		"email": "dbicanic77@gmail.com"
+		    		"email": arguments.fromEmail
 		    	},
-		    	"subject": "Hello, World!",
+		    	"subject": arguments.subject,
 		    	"content": [
-		    		{ "type": "text/plain", "value": "Text" }
+		    		{ "type": "html", "value": arguments.content }
 		    	]
 		    }));
 		}

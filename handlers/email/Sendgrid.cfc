@@ -1,23 +1,21 @@
 component extends="modules.cbrestbasehandler.handlers.BaseHandler" {
 
 	this.allowedMethods = {
-		sendSendgrid: "GET,POST"
+		sendSendgrid: "POST"
 	};
 
 	function preHandler( event, rc, prc, action, eventArguments ){
 		variables.sendgridService = populateModel( "service.email.SendgridService" );
-		super.getHeaderParametersPassedin( rc, prc );
+		super.getHeaderParametersPassedin( rc );
 	}
 	function postHandler( event, rc, prc, action, eventArguments ){
 		// prc.results[ "errors" ] = variables.sendgridService.getErrors();
 	}
 
 	public any function sendSendgrid( event, rc, prc ){
-		writeDump(rc);
-		abort;
-		var response = sendgridService.sendSendgrid( arguementCollection=rc );
-
-		event.renderData( type="json", data=response );
+		var response = sendgridService.sendSendgrid( argumentCollection = rc );
+		return "test";
+		// event.renderData( type="json", data=response );
 	}
 	/**
 	function aroundHandler( event, rc, prc, targetAction, eventArguments ){
