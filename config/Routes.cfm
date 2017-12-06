@@ -23,7 +23,6 @@
 		pattern="email/sendgrid",
 		handler = 'email.sendgrid',
 		action = {
-			GET = 'sendSendgrid',
 			POST = 'sendSendgrid'
 		}
 	);
