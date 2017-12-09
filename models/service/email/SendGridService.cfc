@@ -17,27 +17,38 @@ component accessors="true"{
 		var auth = "Bearer " & arguments.APIKey;
 		var requestBody = {
 	    	"personalizations": [
-	    		{ "to": [
-	    			{"email": arguments.toEmail}
-	    			]
+	    		{
+	    			"to": [
+	    				{
+	    					"email": arguments.toEmail
+	    				}
+	    			],
+	    			"subject": arguments.subject,
+	    			"substitutions" : deserializeJSON( arguments.substitutions )
 	    		}
 	    	],
 	    	"from": {
 	    		"email": arguments.fromEmail
 	    	},
-	    	"subject": arguments.subject,
 	    	"content": [
-	    		{ "type": "html", "value": arguments.content }
+	    		{ "type": "text/plain", "value": arguments.content }
 	    	]
 	    };
 
-	    arguments.keyExists("templateID") ?: requestBody.append( ',"template_id": #arguments.templateID#');
+	    if( arguments.keyExists("templateID") ){
+	    	requestBody[ "template_id" ]= arguments.templateID;
+	    };
+
+	    writeDump(requestBody);
 
 		cfhttp( method="POST", charset="utf-8", url="https://api.sendgrid.com/v3/mail/send", result="result" ){
 		    cfhttpparam( name="Authorization", type="header", value=auth );
 		    cfhttpparam( name="Content-Type", type="header", value="application/json" );
 		    cfhttpparam( type="body", value=serializeJSON(requestBody));
-		}
+		};
+
+		writeDump(result);
+		abort;
 
 		data.statusCode = result.status_code;
 		data.statusText = result.status_text;
