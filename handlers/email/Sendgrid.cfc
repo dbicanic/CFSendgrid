@@ -14,20 +14,7 @@ component extends="modules.cbrestbasehandler.handlers.BaseHandler" {
 
 	public any function sendSendgrid( event, rc, prc ){
 		var response = sendgridService.sendSendgrid( argumentCollection = rc );
-		return "test";
-		// event.renderData( type="json", data=response );
+		event.renderData( type="json", data=response );
 	}
-	/**
-	function aroundHandler( event, rc, prc, targetAction, eventArguments ){
-		// executed targeted action
-		arguments.targetAction( event );
-	}
-	function onMissingAction( event, rc, prc, missingAction, eventArguments ){
-	}
-	function onError( event, rc, prc, faultAction, exception, eventArguments ){
-	}
-	function onInvalidHTTPMethod( event, rc, prc, faultAction, eventArguments ){
-	}
-	*/
 
 }
