@@ -16,23 +16,29 @@ component accessors="true"{
 
 		var auth = "Bearer " & arguments.APIKey;
 		var requestBody = {
-	    	"personalizations": [
-	    		{
-	    			"to": [
-	    				{
-	    					"email": arguments.toEmail
-	    				}
-	    			],
-	    			"subject": arguments.subject,
-	    			"substitutions" : deserializeJSON( arguments.substitutions )
-	    		}
-	    	],
-	    	"from": {
-	    		"email": arguments.fromEmail
-	    	},
-	    	"content": [
-	    		{ "type": "text/plain", "value": arguments.content }
-	    	]
+			"personalizations": [
+				{
+					"to": [
+						{
+							"email": arguments.toEmail
+						}
+					]
+				}
+			],
+			"from": {
+				"email": arguments.fromEmail
+			},
+			"subject": arguments.subject,
+			"content": [
+				{
+					"type": "text/html",
+					"value": arguments.content
+				}
+			]
+		}
+
+		if( arguments.keyExists("substitutions") ){
+	    	requestBody.personalizations[1]["substitutions"] = deserializeJSON(arguments.substitutions);
 	    };
 
 	    if( arguments.keyExists("templateID") ){
@@ -47,12 +53,12 @@ component accessors="true"{
 		    cfhttpparam( type="body", value=serializeJSON(requestBody));
 		};
 
-		writeDump(result);
-		abort;
-
 		data.statusCode = result.status_code;
 		data.statusText = result.status_text;
 		data.headerResponse = result.header;
+
+		writeDump(data);
+		abort;
 
 		return data;
 	}
