@@ -45,8 +45,6 @@ component accessors="true"{
 	    	requestBody[ "template_id" ]= arguments.templateID;
 	    };
 
-	    writeDump(requestBody);
-
 		cfhttp( method="POST", charset="utf-8", url="https://api.sendgrid.com/v3/mail/send", result="result" ){
 		    cfhttpparam( name="Authorization", type="header", value=auth );
 		    cfhttpparam( name="Content-Type", type="header", value="application/json" );
@@ -56,9 +54,6 @@ component accessors="true"{
 		data.statusCode = result.status_code;
 		data.statusText = result.status_text;
 		data.headerResponse = result.header;
-
-		writeDump(data);
-		abort;
 
 		return data;
 	}
