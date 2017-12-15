@@ -10,8 +10,9 @@ component extends="modules.cbrestbasehandler.handlers.BaseHandler" {
 	}
 
 	public any function sendSendgrid( event, rc, prc ){
-		rc.response = sendgridService.sendSendgrid( argumentCollection = rc );
-		event.renderData( type="json", data=rc.response );
+		var response = sendgridService.sendSendgrid( argumentCollection = rc );
+		// event.renderData( type="json", data=rc.response );
+		prc.response.setData( response );
 	}
 
 }
