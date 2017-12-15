@@ -9,9 +9,9 @@ component accessors="true"{
 		){
 
 		var data = {
-			statusCode: "",
-			statusText: "",
-			headerResponse: ""
+			"statusCode": "",
+			"statusText": "",
+			"headerResponse": ""
 		};
 
 		var auth = "Bearer " & arguments.APIKey;
